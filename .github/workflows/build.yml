@@ -9,14 +9,21 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - id: vars
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Prepare Release Prefix 
+        id: vars
         run: |
           echo ::set-output name=prefix::${GITHUB_REPOSITORY##*/}_${GITHUB_REF##*/}
-      - uses: ilgooz/starport/actions/cli@feat/action
+
+      - name: Create Release 
+        uses: ilgooz/starport/actions/cli@feat/action
         with:
           args: build --release --release.prefix ${{ steps.vars.outputs.prefix }} -t linux:amd64 -t darwin:amd64
-      - uses: softprops/action-gh-release@v1
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v1
         with:
           files: release/*
           draft: true
