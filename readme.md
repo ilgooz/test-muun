@@ -1,6 +1,6 @@
-# test
+# venus
 
-**test** is a blockchain application built using Cosmos SDK and Tendermint and generated with [Starport](https://github.com/tendermint/starport).
+**venus** is a blockchain built using Cosmos SDK and Tendermint and created with [Starport](https://github.com/tendermint/starport).
 
 ## Get started
 
@@ -8,41 +8,32 @@
 starport serve
 ```
 
-`serve` command installs dependencies, initializes and runs the application.
+`serve` command installs dependencies, builds, initializes, and starts your blockchain in development.
 
 ## Configure
 
-Initialization parameters of your app are stored in `config.yml`.
+Your blockchain in development can be configured with `config.yml`. To learn more, see the [Starport docs](https://docs.starport.network).
 
-### `accounts`
+## Launch
 
-A list of user accounts created during genesis of your application.
+To launch your blockchain live on multiple nodes, use `starport network` commands. Learn more about [Starport Network](https://github.com/tendermint/spn).
 
-| Key   | Required | Type            | Description                                       |
-| ----- | -------- | --------------- | ------------------------------------------------- |
-| name  | Y        | String          | Local name of the key pair                        |
-| coins | Y        | List of Strings | Initial coins with denominations (e.g. "100coin") |
+## Web Frontend
 
+Starport has scaffolded a Vue.js-based web app in the `vue` directory. Run the following commands to install dependencies and start the app:
 
-### CI
+```
+cd vue
+npm install
+npm run serve
+```
 
-By default, this chain includes a github action that builds for amd64 and arm64 on Windows, Mac, and Linux.
-
-### Docker Images And Pi Images
-
-In order for Docker images and Raspberry Pi images to build successfully, please add your docker hub credentials as [secrets](https://github.com/(test/test/settings/secrets/actions)
-
-Add these:
-
-DOCKERHUB_USERNAME
-DOCKERHUB_TOKEN
-
-You can get the token [here](https://hub.docker.com/settings/security)
-
+The frontend app is built using the `@starport/vue` and `@starport/vuex` packages. For details, see the [monorepo for Starport front-end development](https://github.com/tendermint/vue).
 
 ## Learn more
 
 - [Starport](https://github.com/tendermint/starport)
+- [Starport Docs](https://docs.starport.network)
 - [Cosmos SDK documentation](https://docs.cosmos.network)
-- [Cosmos Tutorials](https://tutorials.cosmos.network)
-- [Channel on Discord](https://discord.gg/W8trcGV)
+- [Cosmos SDK Tutorials](https://tutorials.cosmos.network)
+- [Discord](https://discord.gg/W8trcGV)

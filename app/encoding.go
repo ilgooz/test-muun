@@ -2,7 +2,7 @@ package app
 
 import (
 	"github.com/cosmos/cosmos-sdk/std"
-	"github.com/test/test/app/params"
+	"github.com/test/venus/app/params"
 )
 
 // MakeEncodingConfig creates an EncodingConfig for testing
