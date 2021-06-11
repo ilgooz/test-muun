@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ilgooz/starport/actions/cli@feat/action
         with:
-          args: build --release --release.prefix $GITHUB_REF -t linux:amd64 -t darwin:amd64
+          args: build --release --release.prefix ${{ env.GITHUB_REF }} -t linux:amd64 -t darwin:amd64
       - uses: softprops/action-gh-release@v1
         with:
           files: release/*
