@@ -1,39 +1,20 @@
-# This is a basic workflow that is manually triggered
+name: CLITEST 
 
-name: test
-
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
-on: [push, pull_request]
-
-# This workflow makes x86_64 binaries for mac, windows, and linux.
+on:
+  push:
+    tags:
+      - 'v*.*.*'
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        arch: [amd64, arm64]
-        targetos: [windows, darwin, linux]
-    name: test ${{ matrix.arch }} for ${{ matrix.targetos }}
     steps:
       - uses: actions/checkout@v2
-      - name: Setup go
-        uses: actions/setup-go@v1
+      - uses: ilgooz/starport/actions/cli@feat/action
         with:
-          go-version: 1.15
+          args: build --release  -t linux:amd64 -t darwin:amd64
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: releases/*
         env:
-          GOOS: ${{ matrix.targetos }}
-          GOARCH: ${{ matrix.arch }}
-
-      - name: Compile
-        run: |
-          go mod download
-          cd cmd/testd
-          go build .
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: testd ${{ matrix.targetos }} ${{ matrix.arch }}
-          path: cmd/testd/testd
-
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
