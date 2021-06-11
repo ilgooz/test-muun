@@ -3,7 +3,7 @@ name: CLITEST
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - v*
 
 jobs:
   test:
@@ -12,9 +12,10 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ilgooz/starport/actions/cli@feat/action
         with:
-          args: build --release  -t linux:amd64 -t darwin:amd64
+          args: build --release --prefix $GITHUB_REF -t linux:amd64 -t darwin:amd64
       - uses: softprops/action-gh-release@v1
         with:
           files: release/*
+          draft: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
