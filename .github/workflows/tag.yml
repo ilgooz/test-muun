@@ -1,0 +1,23 @@
+name: Tag 
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Tag Develop 
+        run: |
+          gh release delete rc -y || true
+          git push origin --delete rc || true
+          git tag rc
+          git push origin rc 
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+

@@ -4,8 +4,9 @@ name: Release
 
 on:
   push:
-    branches:
-      - develop
+    tags:
+      - v*
+      - rc
 
 jobs:
   test:
@@ -28,6 +29,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: release/*
-          name: "develop" 
+          draft: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
