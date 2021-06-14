@@ -4,6 +4,8 @@ name: Release
 
 on:
   push:
+    tags:
+      - v*
     branches:
       - develop
 
@@ -17,6 +19,7 @@ jobs:
       - name: Prepare Tarball Prefix 
         id: vars
         run: |
+          echo ::set-output name=name::${GITHUB_REF##*/}
           echo ::set-output name=prefix::${GITHUB_REPOSITORY##*/}_${GITHUB_REF##*/}
 
       - name: Create the Release 
@@ -25,9 +28,10 @@ jobs:
           args: build --release --release.prefix ${{ steps.vars.outputs.prefix }} -t linux:amd64 -t darwin:amd64
 
       - name: Publish It
-        uses: softprops/action-gh-release@v1
+        uses: ncipollo/release-action@v1
         with:
-          files: release/*
-          name: "develop" 
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: release/*
+          tag: ${{ steps.vars.outputs.name }}
+          draft: startsWith(github.ref, "refs/tags/") 
+          token: ${{ secrets.GITHUB_TOKEN }}
+
